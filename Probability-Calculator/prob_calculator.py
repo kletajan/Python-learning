@@ -6,7 +6,7 @@ import random
 class Hat():
 
   def __init__(self, **listOfBalls):
-    self.contest = []
+    self.contents = []
     for colorBall, countBall in listOfBalls.items():
       for balls in range(countBall):
         self.contents.append(colorBall)
@@ -30,8 +30,8 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
   for colorBallExpected, countBallExpected in expected_balls.items():
     for ballsExpected in range(countBallExpected):
       listExpected.append(colorBallExpected)
-  for num_ball_drawn in range(num_balls_drawn):
-    drawNumBallsDrawn = hat.draw(num_ball_drawn)
+  for num_ball_drawn in range(num_experiments):
+    drawNumBallsDrawn = hat.draw(num_balls_drawn)
     hat.contents = copy.deepcopy(hatContentCopy)
     counter = 0
     for li in listExpected:

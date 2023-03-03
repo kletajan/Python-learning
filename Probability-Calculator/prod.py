@@ -1,20 +1,52 @@
-listOfBalls = ("black=2", "red=1", "green=3")
-
-newList = []
-counter = 0
-for ball in listOfBalls:
-    ballColor = listOfBalls[counter].split('=')[0]
-    ballCount = int(listOfBalls[counter].split('=')[1])
-    while ballCount > 0:
-        newList.append(ballColor)
-        ballCount = ballCount - 1
-    counter = counter + 1
-        
-print(newList)
-print('test: "black", "black", "red", "green", "green", "green"') 
-
-def total_fruits(**kwargs):
-    print(kwargs, type(kwargs))
+import copy
+import random
+# Consider using the modules imported above.
 
 
-total_fruits(banana=5, mango=7, apple=8)
+class Hat():
+
+  def __init__(self, **listOfBalls):
+    self.contents = []
+    for colorBall, countBall in listOfBalls.items():
+      for balls in range(countBall):
+        self.contents.append(colorBall)
+
+  def draw(self, num_balls_drawn):
+    if num_balls_drawn <= len(self.contents):
+      drawn_balls = []
+      for i in range(num_balls_drawn):
+        random_int = random.randrange(len(self.contents))
+        drawn_balls.append(self.contents[random_int])
+        self.contents.pop(random_int)
+      return drawn_balls
+    else:
+      return self.contents
+
+
+def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
+  m = 0
+  listExpected = []
+  hatContentCopy = copy.deepcopy(hat.contents)
+  for colorBallExpected, countBallExpected in expected_balls.items():
+    for ballsExpected in range(countBallExpected):
+      listExpected.append(colorBallExpected)
+  for num_ball_drawn in range(num_balls_drawn):
+    drawNumBallsDrawn = hat.draw(num_ball_drawn)
+    hat.contents = copy.deepcopy(hatContentCopy)
+    counter = 0
+    for li in listExpected:
+      for dr in drawNumBallsDrawn:
+        if li == dr:
+          drawNumBallsDrawn.pop(drawNumBallsDrawn.index(dr))
+          counter = counter + 1
+          break
+      if counter == len(listExpected):
+        m = m + 1 
+  return m / num_experiments
+  
+  
+hat = Hat(blue=3,red=2,green=6)
+probability = experiment(hat=hat, expected_balls={"blue":2,"green":1}, num_balls_drawn=4, num_experiments=1000)
+
+print(Hat)
+print(probability)
