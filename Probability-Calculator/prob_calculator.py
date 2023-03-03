@@ -26,13 +26,20 @@ class Hat():
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
   m = 0
   listExpected = []
+  hatContentCopy = copy.deepcopy(hat.contents)
   for colorBallExpected, countBallExpected in expected_balls.items():
     for ballsExpected in range(countBallExpected):
       listExpected.append(colorBallExpected)
   for num_ball_drawn in range(num_balls_drawn):
-    drawNumBallsDrawn = hat.draw.(num_ball_drawn)
-    
-    
-    
-    
+    drawNumBallsDrawn = hat.draw(num_ball_drawn)
+    hat.contents = copy.deepcopy(hatContentCopy)
+    counter = 0
+    for li in listExpected:
+      for dr in drawNumBallsDrawn:
+        if li == dr:
+          drawNumBallsDrawn.pop(drawNumBallsDrawn.index(dr))
+          counter = counter + 1
+          break
+      if counter == len(listExpected):
+        m = m + 1 
   return m / num_experiments
