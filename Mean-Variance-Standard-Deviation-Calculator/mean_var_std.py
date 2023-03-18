@@ -4,21 +4,14 @@ def calculate(list):
   
   if len(list) == 9:
     x = np.array(list).reshape(3,3)
-
-    meanList = [np.mean(x, axis=0, dtype=np.float32), x.mean(axis=1), x.mean()]
-    varianceList = 5
-    standevList = 5
-    maxList = 5
-    minList = 5
-    sumList = 5
-
+    
     calculations = {
-      'mean': meanList,
-      'variance': varianceList,
-      'standard deviation': standevList,
-      'max': maxList,
-      'min': minList,
-      'sum': sumList
+      'mean': [np.mean(x, axis=0).tolist(), np.mean(x, axis=1).tolist(), np.mean(x).tolist()],
+      'variance': [np.var(x, axis=0).tolist(), np.var(x, axis=1).tolist(), np.var(x).tolist()],
+      'standard deviation': [np.std(x, axis=0).tolist(), np.std(x, axis=1).tolist(), np.std(x).tolist()],
+      'max': [np.max(x, axis=0).tolist(), np.max(x, axis=1).tolist(), np.max(x).tolist()],
+      'min': [np.min(x, axis=0).tolist(), np.min(x, axis=1).tolist(), np.min(x).tolist()],
+      'sum': [np.sum(x, axis=0).tolist(), np.sum(x, axis=1).tolist(), np.sum(x).tolist()]
     }
 
   else:
