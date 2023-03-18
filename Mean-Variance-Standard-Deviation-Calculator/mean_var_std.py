@@ -15,7 +15,7 @@ def calculate(list):
     }
 
   else:
-    calculations = ValueError("List must contain nine numbers")
+    raise ValueError('List must contain nine numbers.')
     
   print(calculations)
 
