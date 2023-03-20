@@ -9,7 +9,7 @@ def calculate_demographic_data(print_data=True):
   race_count = pd.Series(df.pivot_table(columns=['race'], aggfunc='size'))
 
   # What is the average age of men?
-  average_age_men = df.loc[df['sex'] == 'Male', 'age'].mean()
+  average_age_men = (df.loc[df['sex'] == 'Male', 'age'].mean()).round(1)
 
   # What is the percentage of people who have a Bachelor's degree?
   percentage_bachelors = ((df['education'] == 'Bachelors').sum() /
@@ -50,11 +50,12 @@ def calculate_demographic_data(print_data=True):
     100).astype(int)
 
   # What country has the highest percentage of people that earn >50K?
-  highest_earning_country = None
-  highest_earning_country_percentage = None
+  earing_country = df.groupby('native-country')['salary'].value_counts(normalize=True)[:,'>50K'].sort_values(ascending=False)
+  highest_earning_country = earing_country.index[0]
+  highest_earning_country_percentage = (earing_country.iloc[0] * 100).round(1)
 
   # Identify the most popular occupation for those who earn >50K in India.
-  top_IN_occupation = None
+  top_IN_occupation = (df[(df['salary'] == ">50K") & (df['native-country'] == "India")]['occupation'].value_counts()).index[0]
 
   # DO NOT MODIFY BELOW THIS LINE
 
