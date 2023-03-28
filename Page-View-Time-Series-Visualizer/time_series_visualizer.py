@@ -5,10 +5,12 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 # Import data (Make sure to parse dates. Consider setting index column to 'date'.)
-df = None
+df = pd.read_csv('fcc-forum-pageviews.csv', parse_dates=['date'])
 
 # Clean data
-df = None
+minusdata = np.floor(len(df) * 0.025).astype(int)
+df = df.drop(range(0, minusdata + 1))
+df = df.drop(range(len(df) - minusdata, len(df)))
 
 
 def draw_line_plot():
